@@ -16,8 +16,7 @@ function SoundSFX(path){
     let obj = ObjSound_Create();
     ObjSound_Load(obj,path);
     ObjSound_SetSoundDivision(obj, SOUND_SE);
-    ObjSound_SetLoopTime(obj, 0,300);
-    ObjSound_SetVolumeRate(obj,GetAreaCommonData("Config", "SFXVolume", 65));
+    ObjSound_SetVolumeRate(obj,65);
     return obj;
 }
 
