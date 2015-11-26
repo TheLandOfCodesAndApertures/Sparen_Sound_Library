@@ -1,3 +1,12 @@
+/* ******************************************************************
+* Sparen's Sound Effect Library
+* For use with Touhou Danmakufu ph3
+* (C) Sparen of Iria 2015
+*
+* Code in this library is under the MIT License and may be 
+* redistributed/modified without express permission
+****************************************************************** */
+
 /* *****************************USAGE EXAMPLE******************************
 *let wave = SoundSFX(GetCurrentScriptDirectory~"./../sound/wave.wav");
 *Above loads the sound effect and returns wave as an object referring to the loaded sound effect.
@@ -8,31 +17,35 @@
 ************************************************************************* */
 
 /* *************************************************************************
-*obj SoundSFX(char) -- Loads a sound effect and creates a sound object for the given sound effect
-*pre: path is a valid filepath
-*post: returns object ID of created sound object, or null if invalid path
+*obj SoundSFX(string) -- Loads a sound effect and creates a sound object for the given file path
+*Param: path (string) - File Path of sound file to use
+*Return: Object ID of created Sound Object, or null if invalid path
 ************************************************************************* */
 function SoundSFX(path){
     let obj = ObjSound_Create();
-    ObjSound_Load(obj,path);
+    ObjSound_Load(obj, path);
     ObjSound_SetSoundDivision(obj, SOUND_SE);
-    ObjSound_SetVolumeRate(obj,65);
+    ObjSound_SetLoopTime(obj, 0, 300);
+    ObjSound_SetVolumeRate(obj, GetAreaCommonData("Config", "SFXVolume", 65));
     return obj;
 }
 
 /* *************************************************************************
 *void PlaySFX(obj) -- Plays a sound effect for a given sound object
-*pre: obj is a valid Sound Object
+*Param: obj (obj) - Sound Object to play
 ************************************************************************* */
 function PlaySFX(obj){
     ObjSound_Play(obj);
 }
 
 /* *************************************************************************
-*void PlaySFXDelay(obj,int) -- Plays a sound effect for a given sound object for a given time
-*pre: obj is a valid Sound Object, delay is an integer
+*void PlaySFXDelay(obj, int) -- Plays a sound effect for a given sound object for a given time
+*Param: obj (obj) - Sound Object to play
+*Param: delay (int) - time to wait before playing, in frames
 ************************************************************************* */
 function PlaySFXDelay(obj, delay){
-    loop(delay){yield;}
+    loop(delay){
+        yield;
+    }
     ObjSound_Play(obj);
 }
